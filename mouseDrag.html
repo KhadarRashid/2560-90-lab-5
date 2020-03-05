@@ -7,7 +7,7 @@
   <style>
 
     #canvas {
-      border: 1px black solid;
+      border: 3px rgb(92, 89, 89) solid;
     }
 
   </style>
@@ -16,10 +16,10 @@
 <body>
 
 
-<P>Click the mouse on the canvas</P>
-<canvas id="canvas" height="400" width="400"></canvas>
-
-<button>Clear</button>
+<P>Drag the mouse on the canvas to draw!</P>
+<canvas id="canvas" height="400" width="400"></canvas><br>
+<lebal for="color">Choose a color: </lebal><input id="color-text" name="color" type='color'><br>
+<lebal for="range">Size of brush: </lebal><input id="range-text" name="range" type='range'>
 
 <script>
 
@@ -27,6 +27,8 @@
   var context = canvas.getContext("2d");
   
   var mousedown = false 
+  let colors = document.querySelector('#color-text')
+  let range = document.querySelector('#range-text')
 
   canvas.addEventListener("mousedown", function() {
     mousedown = true
@@ -38,22 +40,20 @@
 
   canvas.addEventListener("mousemove", function() {
 
-    if (!mousedown) { return; }
-
+    if (!mousedown) 
+      { return; }
+    let color_value = colors.value
+    let range_value = range.value
     // event is a built-in variable, contains the event that triggered this function
     // get the x, y location of the event
     var x = event.offsetX;
     var y = event.offsetY;   //offsetX, offsetY, may not work in older browsers
 
-    //Draw a filled rectangle centered under the mouse click
-    //x, y is the top left corner, so shift up and left by 5 to center it under the mouse.
-    context.fillRect(x-5, y-5, 10, 10);
-    // context.beginPath();
-
-    // context.arc(300, 200, 50, 0, 2 * Math.PI);
-    // context.stroke();
-
-
+    context.beginPath()
+    context.arc(x-5, y-5, range_value, 0, 2* Math.PI)
+    context.stroke()
+    context.fill()
+    context.fillStyle = color_value
   })
 
 </script>
